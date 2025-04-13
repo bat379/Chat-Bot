@@ -1,0 +1,170 @@
+/* Character Model Styling */
+.model-wrapper {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.model-card {
+    width: 320px;
+    height: 420px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.model-card:hover {
+    transform: rotateY(10deg);
+}
+
+/* Enhancing model appearance */
+.model-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hair-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    z-index: 3;
+    transition: all 0.3s ease;
+    clip-path: polygon(20% 0%, 80% 0%, 85% 10%, 90% 20%, 80% 30%, 70% 25%, 60% 20%, 50% 25%, 40% 20%, 30% 25%, 20% 30%, 10% 20%, 15% 10%);
+}
+
+.clothes-layer {
+    position: absolute;
+    top: 30%;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    z-index: 2;
+    transition: all 0.3s ease;
+    clip-path: polygon(20% 0%, 80% 0%, 85% 15%, 90% 30%, 85% 50%, 90% 70%, 85% 100%, 15% 100%, 10% 70%, 15% 50%, 10% 30%, 15% 15%);
+}
+
+/* Hairstyle variations */
+.hairstyle-long {
+    clip-path: polygon(25% 0%, 75% 0%, 85% 15%, 90% 30%, 75% 40%, 65% 35%, 50% 30%, 35% 35%, 25% 40%, 10% 30%, 15% 15%);
+}
+
+.hairstyle-short {
+    clip-path: polygon(30% 0%, 70% 0%, 75% 10%, 80% 20%, 70% 25%, 50% 20%, 30% 25%, 20% 20%, 25% 10%);
+}
+
+.hairstyle-curly {
+    clip-path: polygon(20% 0%, 80% 0%, 90% 15%, 85% 25%, 90% 35%, 80% 40%, 65% 35%, 50% 40%, 35% 35%, 20% 40%, 10% 35%, 15% 25%, 10% 15%);
+}
+
+.hairstyle-bob {
+    clip-path: polygon(25% 0%, 75% 0%, 80% 15%, 85% 25%, 75% 30%, 50% 25%, 25% 30%, 15% 25%, 20% 15%);
+}
+
+/* Clothing variations */
+.clothing-dress {
+    clip-path: polygon(30% 0%, 70% 0%, 80% 20%, 85% 50%, 90% 100%, 10% 100%, 15% 50%, 20% 20%);
+}
+
+.clothing-casual {
+    clip-path: polygon(30% 0%, 70% 0%, 85% 20%, 90% 40%, 85% 70%, 90% 100%, 10% 100%, 15% 70%, 10% 40%, 15% 20%);
+}
+
+.clothing-formal {
+    clip-path: polygon(30% 0%, 70% 0%, 75% 10%, 85% 30%, 90% 60%, 85% 100%, 15% 100%, 10% 60%, 15% 30%, 25% 10%);
+}
+
+.clothing-sporty {
+    clip-path: polygon(30% 0%, 70% 0%, 80% 15%, 85% 40%, 80% 70%, 85% 100%, 15% 100%, 20% 70%, 15% 40%, 20% 15%);
+}
+
+/* Style selector controls */
+.style-controls {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.style-section {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.style-section h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 16px;
+}
+
+.style-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.style-option {
+    padding: 6px 12px;
+    background-color: #ddd;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.style-option:hover {
+    background-color: #ccc;
+}
+
+.style-option.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Color preview swatches */
+.color-swatch {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 3px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+
+/* Animation for model changes */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.model-change {
+    animation: pulse 0.5s ease;
+}
+
+.model-image svg {
+    width: 100%; /* Adjusts the width to fit the container */
+    height: auto; /* Maintains aspect ratio */
+    max-width: 250px; /* Maximum width */
+    max-height: 400px; /* Maximum height */
+}
