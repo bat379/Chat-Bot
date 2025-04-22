@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#000000">
+    <title>Style Finder Chat Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/character.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Style Finder</h1>
+            <div class="header-controls">
+                <button id="theme-toggle" class="theme-toggle">
+                    <span class="light-icon">☀️</span>
+                    <span class="dark-icon">🌙</span>
+                </button>
+                <div class="model-toggle">
+                    <button class="gender-option active" data-model="female">Female</button>
+                    <button class="gender-option" data-model="male">Male</button>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="layout">
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="message bot">
+                            <span class="avatar">🤖</span>
+                            <span>Welcome to Style Finder! I'll help you discover your personal style.</span>
+                        </div>
+                        <div class="message bot">
+                            <span class="avatar">🤖</span>
+                            <span>Try customizing the model's hair and clothes, then ask for a style recommendation.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input">
+                        <span class="avatar">👤</span>
+                        <input type="text" id="user-message" placeholder="Type your message here...">
+                        <button id="send-btn">Send</button>
+                    </div>
+                </div>
+                
+                <div class="model-container">
+                    <div class="model-wrapper">
+                        <div class="model-card">
+                            <div id="female-model" class="model-image">
+                                <svg width="250" height="400" viewBox="0 0 250 400">
+                                    <!-- New Female body -->
+                                    <path d="M125,100 C145,100 165,130 165,170 L165,230 C165,250 155,270 145,290 L145,380 C145,420 135,460 125,460 C115,460 105,420 105,380 L105,290 C95,270 85,250 85,230 L85,170 C85,130 105,100 125,100 Z" fill="#FFD8B1"/>
+                                    <!-- New Female face -->
+                                    <ellipse cx="125" cy="90" rx="35" ry="45" fill="#FFD8B1"/>
+                                    <!-- New Female eyes -->
+                                    <circle cx="115" cy="80" r="4" fill="#000"/>
+                                    <circle cx="135" cy="80" r="4" fill="#000"/>
+                                    <!-- New Female mouth -->
+                                    <path d="M115,105 Q125,115 135,105" stroke="#000" fill="none"/>
+                                    <!-- New Female hair -->
+                                    <path id="female-hair-svg" fill="#663300" d="M90,40 C70,60 70,90 90,110 L160,110 C180,90 180,60 160,40 Z"/>
+                                    <!-- New Female clothes -->
+                                    <path id="female-clothes-svg" fill="#3333CC" d="M85,170 L165,170 L145,290 L105,290 Z"/>
+                                    <!-- New Female arms -->
+                                    <path d="M85,170 L65,250 L85,250 L105,170 Z M165,170 L185,250 L165,250 L145,170 Z" fill="#FFD8B1"/>
+                                    <!-- New Female legs -->
+                                    <path d="M110,380 L120,460 L130,460 L140,380 Z" fill="#FFD8B1"/>
+                                </svg>
+                            </div>
+                            
+                            <div id="male-model" class="model-image hidden">
+                                <svg width="250" height="400" viewBox="0 0 250 400">
+                                    <!-- New Male body -->
+                                    <path d="M125,100 C155,100 175,130 175,170 L175,230 C175,250 165,270 155,290 L155,380 C155,420 135,460 125,460 C115,460 105,420 105,380 L105,290 C95,270 85,250 85,230 L85,170 C85,130 105,100 125,100 Z" fill="#FFD8B1"/>
+                                    <!-- New Male face -->
+                                    <ellipse cx="125" cy="90" rx="40" ry="50" fill="#FFD8B1"/>
+                                    <!-- New Male eyes -->
+                                    <circle cx="115" cy="80" r="5" fill="#000"/>
+                                    <circle cx="135" cy="80" r="5" fill="#000"/>
+                                    <!-- New Male mouth -->
+                                    <path d="M115,105 Q125,110 135,105" stroke="#000" fill="none"/>
+                                    <!-- New Male hair -->
+                                    <path id="male-hair-svg" fill="#000" d="M85,40 C65,60 65,90 85,110 L165,110 C185,90 185,60 165,40 Z"/>
+                                    <!-- New Male clothes -->
+                                    <path id="male-clothes-svg" fill="#3333CC" d="M85,170 L175,170 L155,290 L105,290 Z"/>
+                                    <!-- New Male arms -->
+                                    <path d="M85,170 L65,250 L85,250 L105,170 Z M175,170 L195,250 L175,250 L155,170 Z" fill="#FFD8B1"/>
+                                    <!-- New Male legs -->
+                                    <path d="M110,380 L120,460 L130,460 L140,380 Z" fill="#FFD8B1"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="customization-panel">
+                <h2>Customize Your Look</h2>
+                
+                <div class="style-controls">
+                    <div class="style-section">
+                        <h3>Hairstyle</h3>
+                        <div class="style-options">
+                            <button class="hairstyle-option active" data-style="short">Short</button>
+                            <button class="hairstyle-option" data-style="long">Long</button>
+                            <button class="hairstyle-option" data-style="curly">Curly</button>
+                            <button class="hairstyle-option" data-style="bob">Bob</button>
+                        </div>
+                    </div>
+                    
+                    <div class="style-section">
+                        <h3>Clothing</h3>
+                        <div class="style-options">
+                            <button class="clothing-option active" data-style="casual">Casual</button>
+                            <button class="clothing-option" data-style="formal">Formal</button>
+                            <button class="clothing-option" data-style="dress">Dress</button>
+                            <button class="clothing-option" data-style="sporty">Sporty</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="color-picker">
+                    <label for="hair-color">Hair Color:</label>
+                    <div class="color-preview">
+                        <span class="color-swatch" style="background-color: #663300;" data-color="#663300"></span>
+                        <span class="color-swatch" style="background-color: #000000;" data-color="#000000"></span>
+                        <span class="color-swatch" style="background-color: #CC9966;" data-color="#CC9966"></span>
+                        <span class="color-swatch" style="background-color: #CCCCCC;" data-color="#CCCCCC"></span>
+                    </div>
+                    <input type="color" id="hair-color" value="#663300">
+                </div>
+                
+                <div class="color-picker">
+                    <label for="clothes-color">Clothes Color:</label>
+                    <div class="color-preview">
+                        <span class="color-swatch" style="background-color: #3333CC;" data-color="#3333CC"></span>
+                        <span class="color-swatch" style="background-color: #CC3333;" data-color="#CC3333"></span>
+                        <span class="color-swatch" style="background-color: #33CC33;" data-color="#33CC33"></span>
+                        <span class="color-swatch" style="background-color: #333333;" data-color="#333333"></span>
+                    </div>
+                    <input type="color" id="clothes-color" value="#3333CC">
+                </div>
+                
+                <button id="recommend-btn">Get Style Recommendation</button>
+                
+                <div id="recommendation" class="recommendation hidden">
+                    <h3>Style Recommendation</h3>
+                    <p id="style-name"></p>
+                    <p id="style-description"></p>
+                    <p id="style-confidence"></p>
+                    <div id="style-elements"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/character.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    // Check for saved theme preference or default to light
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize character model
+        const characterModel = new CharacterModel();
+    
+        // Gender toggle
+        document.querySelectorAll('.gender-option').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.gender-option').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                characterModel.setModel(button.dataset.model);
+            });
+        });
+    
+        // Hairstyle options
+        document.querySelectorAll('.hairstyle-option').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.hairstyle-option').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                characterModel.setHairstyle(button.dataset.style);
+            });
+        });
+    
+        // Clothing options
+        document.querySelectorAll('.clothing-option').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.clothing-option').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                characterModel.setClothing(button.dataset.style);
+            });
+        });
+    
+        // Color swatches
+        document.querySelectorAll('.color-swatch').forEach(swatch => {
+            swatch.addEventListener('click', () => {
+                const color = swatch.dataset.color;
+                const parent = swatch.closest('.color-picker');
+                if (parent.querySelector('#hair-color')) {
+                    characterModel.setHairColor(color);
+                    parent.querySelector('#hair-color').value = color;
+                } else {
+                    characterModel.setClothesColor(color);
+                    parent.querySelector('#clothes-color').value = color;
+                }
+            });
+        });
+    
+        // Color inputs
+        document.getElementById('hair-color').addEventListener('input', (e) => {
+            characterModel.setHairColor(e.target.value);
+        });
+    
+        document.getElementById('clothes-color').addEventListener('input', (e) => {
+            characterModel.setClothesColor(e.target.value);
+        });
+    });
+    </script>
+</body>
+</html>
